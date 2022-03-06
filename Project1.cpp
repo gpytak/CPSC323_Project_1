@@ -1,3 +1,8 @@
+// ============================================================================
+// Programmer: 
+// Date: 03/11/2022
+// Class: CPSC 232
+// ============================================================================
 #include <iostream>
 #include <vector>
 #include <string>
@@ -22,6 +27,7 @@ enum TransitionStates {
 
 // Prototypes
 int getCol(char character);
+void lexer(string line);
 
 class FSM;
 class StateTable 
@@ -29,20 +35,19 @@ class StateTable
 friend FSM; // INPUTS
 protected:  /* INTEGER, REAL, OPERATOR, STRING, SPACE, SEPARATOR, COMMENT, UNKNOWN  */
 int table[9][9] = 
-{ {REJECT, INTEGER, REAL, OPERATOR, STRING, SPACE, SEPARATOR, COMMENT, UNKNOWN},
+             {{REJECT,    INTEGER,       REAL,          OPERATOR,      STRING,       SPACE,         SEPARATOR,    COMMENT,  UNKNOWN},
 /* STATE 1 */ {INTEGER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
-/* STATE 2 */ {REAL,      PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
-/* STATE 3 */ {OPERATOR,  PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
-/* STATE 4 */ {STRING,    PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
-/* STATE 5 */ {SPACE,     PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
+/* STATE 2 */ {REAL,      PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
+/* STATE 3 */ {OPERATOR,  PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
+/* STATE 4 */ {STRING,    PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
+/* STATE 5 */ {SPACE,     PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
 /* STATE 6 */ {SEPARATOR, PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  },
-/* STATE 7 */ {COMMENT, PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  REJECT, PLACEHOLDER  },
-/* STATE 8 */ {UNKNOWN,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER  }
-};
+/* STATE 7 */ {COMMENT,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  REJECT,   PLACEHOLDER  },
+/* STATE 8 */ {UNKNOWN,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER }};
 };
 
 class Token {
-    lexer(string) 
+    //lexer(string) 
     {
         // NOTE: Keep track of previous state
         // Was the previous line a comment?
@@ -57,9 +62,10 @@ class Token {
             // State switching mechanism
             // Is current state starting state? (Did you just arrive on a new lexeme?)
             {
-            // Only add tokens and lexemes that are not SPACE or COMMENT to container.
-            {
-            }
+                // Only add tokens and lexemes that are not SPACE or COMMENT to container.
+                {
+                    
+                }
             // If previous state is COMMENT. We move the expression index forward.
             // Reset lexeme string.
             }
@@ -87,5 +93,10 @@ class Token {
 int main()
 {
 
+    return 0;
+}
+
+int getCol(char character)
+{
     return 0;
 }
