@@ -20,6 +20,9 @@ enum TransitionStates {
     PLACEHOLDER = 9
 };
 
+// Prototypes
+int getCol(char character);
+
 class FSM;
 class StateTable 
 {
@@ -49,7 +52,7 @@ class Token {
         {
             // What is the input?
             // get current column/input of current character 
-            getCol(char)
+            //getCol(char)
             // get current state of expression
             // State switching mechanism
             // Is current state starting state? (Did you just arrive on a new lexeme?)
