@@ -6,7 +6,7 @@
 
 using namespace std;
 // These are the inputs for the FSM.
-
+//FOR SCIENCE
 enum TransitionStates {
 REJECT = 0, // REJECT is the starting state and 
 final state.
