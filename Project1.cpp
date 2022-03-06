@@ -27,21 +27,21 @@ protected:  /* INTEGER,   REAL,   OPERATOR,
 STRING,   SPACE,   SEPARATOR,  COMMENT,  UNKNOWN  */
 int table[9][9] = 
 { {REJECT, INTEGER, REAL, OPERATOR, STRING, SPACE, SEPARATOR, COMMENT, UNKNOWN},
-/* STATE 1 */ {INTEGER,   -------,   ----,   --------,   --
+/* STATE 1 */ {"INTEGER",   -------,   ----,   --------,   --
 ----,  -----,   ---------,  COMMENT,  -------  },
-/* STATE 2 */ {REAL,      -------,   ----,   --------,   --
+/* STATE 2 */ {"REAL",      -------,   ----,   --------,   --
 ----,   -----,   ---------,  COMMENT,  -------  },
-/* STATE 3 */ {OPERATOR,  -------,   ----,   --------,   --
+/* STATE 3 */ {"OPERATOR",  -------,   ----,   --------,   --
 ----,   -----,   ---------,  COMMENT,  -------  },
-/* STATE 4 */ {STRING,    -------,   ----,   --------,   --
+/* STATE 4 */ {"STRING",    -------,   ----,   --------,   --
 ----,   -----,   ---------,  COMMENT,  -------  },
-/* STATE 5 */ {SPACE,     -------,   ----,   --------,   --
+/* STATE 5 */ {"SPACE",     -------,   ----,   --------,   --
 ----,   -----,   ---------,  COMMENT,  -------  },
-/* STATE 6 */ {SEPARATOR, -------,   ----,   --------,   --
+/* STATE 6 */ {"SEPARATOR", -------,   ----,   --------,   --
 ----,  -----,   ---------,  COMMENT,  -------  },
-/* STATE 7 */ {COMMENT, -------,   ----,   --------,   ---
+/* STATE 7 */ {"COMMENT", -------,   ----,   --------,   ---
 ---,  -----,   ---------,  REJECT, -------  },
-/* STATE 8 */ {UNKNOWN,   -------,   ----,   --------,   --
+/* STATE 8 */ {"UNKNOWN",   -------,   ----,   --------,   --
 ----,  -----,   ---------,  COMMENT,  -------  }
 };
 };
