@@ -39,6 +39,7 @@ void lexer(string line);
 class FSM;
 class StateTable;
 class Token;
+
 // ============================================================================
 //  MAIN
 // ============================================================================
@@ -57,20 +58,35 @@ int main()
     cout << "2: Input File 2";
     cout << "3: Input File 2";
 
-    cin >> input;
+    // Receive input from user to select which file to open
+    // Loops if input received is not acceptable
+    while(true)
+    {
+        cin >> input;
+        if(input == 1 || input == 2 || input == 3)
+        {
+            break;
+        }
 
+        cout << "Please input 1, 2, or 3." << endl;
+    }
+
+    // Uses user input to select which file to open
     if(input == 1)
     {
-
+        inFile.open(file1);
     }
     else if(input == 2)
     {
-        
+        inFile.open(file2);
     }
     else
     {
-
+        inFile.open(file3);
     }
+
+    
+    
 
     return 0;
 }
@@ -90,7 +106,12 @@ int table[9][9] =
 /* STATE 8 */ {UNKNOWN,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER }};
 };
 
-class Token {
+class Token 
+{
+    public string token;
+    public int lexeme;
+    public string lexemeLiteral;
+
     //lexer(string) Function
         // NOTE: Keep track of previous state
         // Was the previous line a comment?
@@ -114,10 +135,20 @@ class Token {
 
 // ============================================================================
 //  int getCol
-//      INPUT - char
+//      INPUT  - char
 //      OUTPUT - Column number associated with the current input character
 // ============================================================================
 int getCol(char character)
 {
     return 0;
+}
+
+// ============================================================================
+//  lexer
+//      INPUT  - 
+//      OUTPUT - 
+// ============================================================================
+void lexer(string line)
+{
+
 }
