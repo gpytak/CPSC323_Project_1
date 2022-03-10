@@ -44,7 +44,6 @@ class Token;
 // ============================================================================
 int main()
 {
-
 	ifstream inFile;
 	int input;
 	string fileInput = "";
@@ -119,12 +118,14 @@ class StateTable
 };
 
 // ============================================================================
-//  CLASS Token
+//  CLASS FSM
 // ============================================================================
-class Token
+class FSM
 {
 	void lexer(string fileInput)
 	{
+		StateTable StateTable;
+		StateTable.table;
 		string token = "";
 		int lexeme;
 		int col = REJECT;
@@ -137,8 +138,8 @@ class Token
 		{
 			currentChar = fileInput[i];
 			col = getCol(currentChar);
-			currentState = table[currentState][col];
-			
+			currentState = StateTable.table[currentState][col];
+
 			if (currentState == REJECT)
 			{
 				if (previousState != SPACE)
@@ -152,6 +153,10 @@ class Token
 				token += currentChar;
 			}
 			previousState = currentState;
+		}
+		if (currentState != SPACE && token != "")
+		{
+
 		}
 	}
 	//lexer(string) Function
@@ -176,12 +181,24 @@ class Token
 };
 
 // ============================================================================
+//  CLASS Token
+// ============================================================================
+class Token
+{
+	struct Tokens
+	{
+
+	};
+};
+
+// ============================================================================
 //  int getCol
 //      INPUT  - char
 //      OUTPUT - Column number associated with the current input character
 // ============================================================================
 int getCol(char character)
 {
+
 	return 0;
 }
 
