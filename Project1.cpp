@@ -48,6 +48,7 @@ int main()
 
     ifstream inFile;
     int input;
+    string input = "";
 
     string file1 = "Input1.txt";
     string file2 = "Input2.txt";
@@ -85,13 +86,27 @@ int main()
         inFile.open(file3);
     }
 
-    
+    if(!inFile.is_open())
+    {
+        cout << "Failed to open file." << endl;
+        return 0;
+    }
     
 
+    while(inFile.peek() != NULL)
+    {
+        
+    }
+
+    inFile.close();
     return 0;
 }
 
-class StateTable {
+// ============================================================================
+//  CLASS StateTable
+// ============================================================================
+class StateTable 
+{
 friend FSM; // INPUTS
 protected:  /* INTEGER, REAL, OPERATOR, STRING, SPACE, SEPARATOR, COMMENT, UNKNOWN  */
 int table[9][9] = 
@@ -106,11 +121,14 @@ int table[9][9] =
 /* STATE 8 */ {UNKNOWN,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,   PLACEHOLDER,  PLACEHOLDER,   PLACEHOLDER,  COMMENT,  PLACEHOLDER }};
 };
 
+// ============================================================================
+//  CLASS Token
+// ============================================================================
 class Token 
 {
-    public string token;
-    public int lexeme;
-    public string lexemeLiteral;
+    string token;
+    int lexeme;
+    string lexemeLiteral;
 
     //lexer(string) Function
         // NOTE: Keep track of previous state
