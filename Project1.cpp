@@ -55,7 +55,7 @@ int main()
 	cout << "Please choose which input file to analyze:" << endl;
 	cout << "1: Input File 1" << endl;
 	cout << "2: Input File 2" << endl;
-	cout << "3: Input File 2" << endl;
+	cout << "3: Input File 3" << endl;
 
 	// Receive input from user to select which file to open
 	// Loops if input received is not acceptable
@@ -68,19 +68,19 @@ int main()
 		}
 		cout << "Please input 1, 2, or 3." << endl;
 	}
-
+	
 	// Uses user input to select which file to open
 	if (input == 1)
 	{
-		inFile.open(file1);
+		inFile.open("file1.txt");
 	}
 	else if (input == 2)
 	{
-		inFile.open(file2);
+		inFile.open("file2.txt");
 	}
 	else
 	{
-		inFile.open(file3);
+		inFile.open("file3.txt");
 	}
 	if (!inFile.is_open())
 	{
