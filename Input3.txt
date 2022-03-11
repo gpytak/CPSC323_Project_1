@@ -1,0 +1,11 @@
+CGrade::CGrade(CGrade &object)
+{
+	cout << "Copy Constructor" << endl << endl;
+	strcpy(m_name,object.m_name);
+	m_quiz1 = object.m_quiz1;
+	m_quiz2 = object.m_quiz2;
+	m_midterm = object.m_midterm;
+	m_finalExam = object.m_finalExam;
+	m_percent = object.m_percent;
+	m_grade = object.m_grade;
+}
