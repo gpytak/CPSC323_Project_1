@@ -1,0 +1,9 @@
+void DispArray(int *point, int length)
+{
+	for(int x = 0; x < length; x++)
+	{
+		cout << point[x] << " ";
+		
+	}
+	cout << endl;
+}
