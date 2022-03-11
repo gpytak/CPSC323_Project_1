@@ -198,8 +198,34 @@ class Token
 // ============================================================================
 int getCol(char character)
 {
-
-	return 0;
+	if (isspace(character))
+	{
+		return SPACE;
+	}
+	else if (isdigit(character))
+	{
+		return INTEGER;
+	}
+	else if (character == '.')
+	{
+		return REAL;
+	}
+	else if (isalpha(character))
+	{
+		return STRING;
+	}
+	else if (ispunct(character))
+	{
+		if (character == '+' || character == '-' || character == '/' || character == '*')
+		{
+			return OPERATOR;
+		}
+		if (character == '(' || character == ')' || character == '{' || character == '}')
+		{
+			return SEPERATOR;
+		}
+	}
+	return UNKNOWN;
 }
 
 // ============================================================================
