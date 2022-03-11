@@ -22,22 +22,45 @@ enum TransitionStates {
 	SPACE = 5,
 	SEPARATOR = 6,
 	COMMENT = 7,
-	UNKNOWN = 8,
-	PLACEHOLDER = 9
+	UNKNOWN = 8
+};
+
+// ============================================================================
+//  STRUCT Token
+// ============================================================================
+struct Tokens
+{
+	string token;
+	int lexeme;
+	string lexemeName;
 };
 
 // ============================================================================
 //  Function Prototypes
 // ============================================================================
+vector<Tokens> lexer(string fileInput);
 int getCol(char character);
-void lexer(string line);
+string lexemeName(int lexeme);
 
 // ============================================================================
 //  Class Prototypes
 // ============================================================================
-class FSM;
 class StateTable;
-class Token;
+
+// ============================================================================
+//  Integer Table
+// ============================================================================
+/* INTEGER, REAL, OPERATOR, STRING, SPACE, SEPARATOR, COMMENT, UNKNOWN  */
+int table[9][9] =
+{ {REJECT,    INTEGER,       REAL,          OPERATOR,      STRING,       SPACE,         SEPARATOR,    COMMENT,  UNKNOWN},
+/* STATE 1 */ {INTEGER,   INTEGER    ,   REAL       ,   REJECT     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
+/* STATE 2 */ {REAL,      REAL       ,   UNKNOWN    ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
+/* STATE 3 */ {OPERATOR,  REJECT     ,   REJECT     ,   COMMENT    ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
+/* STATE 4 */ {STRING,    STRING     ,   REJECT     ,   STRING     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
+/* STATE 5 */ {SPACE,     REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
+/* STATE 6 */ {SEPARATOR, REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
+/* STATE 7 */ {COMMENT,   REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  REJECT,   REJECT  },
+/* STATE 8 */ {UNKNOWN,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,  UNKNOWN    ,   UNKNOWN    ,  UNKNOWN,  REJECT  } };
 
 // ============================================================================
 //  MAIN
@@ -47,6 +70,7 @@ int main()
 	ifstream inFile;
 	int input;
 	string fileInput = "";
+	vector<Tokens> tokens;
 
 	string file1 = "Input1.txt";
 	string file2 = "Input2.txt";
@@ -91,7 +115,11 @@ int main()
 
 	while (getline(inFile, fileInput))
 	{
-		lexer(fileInput);
+		tokens = lexer(fileInput);
+		for (int i = 0; i < tokens.size(); i++)
+		{
+			cout << tokens[i].lexemeName << " \t" << tokens[i].token << endl;
+		}
 	}
 
 	inFile.close();
@@ -99,97 +127,49 @@ int main()
 }
 
 // ============================================================================
-//  CLASS StateTable
+//  Vector lexer
 // ============================================================================
-class StateTable
+vector<Tokens> lexer(string fileInput)
 {
-	friend FSM; // INPUTS
-	protected:  /* INTEGER, REAL, OPERATOR, STRING, SPACE, SEPARATOR, COMMENT, UNKNOWN  */
-	int table[9][9] =
-	{ 		      {REJECT,    INTEGER,       REAL,          OPERATOR,      STRING,       SPACE,         SEPARATOR,    COMMENT,  UNKNOWN},
-		/* STATE 1 */ {INTEGER,   INTEGER    ,   REAL       ,   REJECT     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-		/* STATE 2 */ {REAL,      REAL       ,   UNKNOWN    ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-		/* STATE 3 */ {OPERATOR,  REJECT     ,   REJECT     ,   COMMENT    ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-		/* STATE 4 */ {STRING,    STRING     ,   REJECT     ,   STRING     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-		/* STATE 5 */ {SPACE,     REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-		/* STATE 6 */ {SEPARATOR, REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-		/* STATE 7 */ {COMMENT,   REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  REJECT,   REJECT  },
-		/* STATE 8 */ {UNKNOWN,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,  UNKNOWN    ,   UNKNOWN    ,  UNKNOWN,  REJECT  } };
-};
+	vector<Tokens> tokens;
+	Tokens type;
+	string currentToken = "";
+	int col = REJECT;
+	int currentState = REJECT;
+	int previousState = REJECT;
+	char currentChar = ' ';
 
-// ============================================================================
-//  CLASS FSM
-// ============================================================================
-class FSM
-{
-	void lexer(string fileInput)
+	for (int i = 0; i < fileInput.length(); i++)
 	{
-		StateTable StateTable;
-		StateTable.table;
-		string token = "";
-		int lexeme;
-		int col = REJECT;
-		int currentState = REJECT;
-		int previousState = REJECT;
-		char currentChar = ' ';
-		string lexemeLiteral;
+		currentChar = fileInput[i];
+		col = getCol(currentChar);
+		currentState = table[currentState][col];
 
-		for (int i = 0; i < fileInput.length(); i++)
+		if (currentState == REJECT)
 		{
-			currentChar = fileInput[i];
-			col = getCol(currentChar);
-			currentState = StateTable.table[currentState][col];
-
-			if (currentState == REJECT)
+			if (previousState != SPACE)
 			{
-				if (previousState != SPACE)
-				{
-
-				}
-				token = "";
+				type.token = currentToken;
+				type.lexeme = previousState;
+				type.lexemeName = lexemeName(type.lexeme);
+				tokens.push_back(type);
 			}
-			else
-			{
-				token += currentChar;
-			}
-			previousState = currentState;
+			currentToken = "";
 		}
-		if (currentState != SPACE && token != "")
+		else
 		{
-
+			currentToken += currentChar;
 		}
+		previousState = currentState;
 	}
-	//lexer(string) Function
-		// NOTE: Keep track of previous state
-		// Was the previous line a comment?
-		// Begin the string walk.
-			// What is the input?
-			// get current column/input of current character 
-			//getCol(char)
-			// get current state of expression
-			// State switching mechanism
-			// Is current state starting state? (Did you just arrive on a new lexeme?)
-				// Only add tokens and lexemes that are not SPACE or COMMENT to container.
-			// If previous state is COMMENT. We move the expression index forward.
-			// Reset lexeme string.
-			// Will skip comments entirely without catching.
-			// Catch and concat character for current lexeme
-			// Reassign previous state
-		// Handle end brackets, parethesis, semicolon, etc.
-		// Handling block comments that extend onto other lines.
-
-};
-
-// ============================================================================
-//  CLASS Token
-// ============================================================================
-class Token
-{
-	struct Tokens
+	if (currentState != SPACE && currentToken != "")
 	{
-
-	};
-};
+		type.token = currentToken;
+		type.lexeme = currentState;
+		type.lexemeName = lexemeName(type.lexeme);
+	}
+	return tokens;
+}
 
 // ============================================================================
 //  int getCol
@@ -222,16 +202,16 @@ int getCol(char character)
 		}
 		if (character == '(' || character == ')' || character == '{' || character == '}')
 		{
-			return SEPERATOR;
+			return SEPARATOR;
 		}
 	}
 	return UNKNOWN;
 }
 
 // ============================================================================
-//  lexer
-//      INPUT  - 
-//      OUTPUT - 
+//  lexemeName
+//      INPUT  - currentState
+//      OUTPUT - Name of Lexeme
 // ============================================================================
 string lexemeName(int lexeme)
 {
@@ -246,8 +226,8 @@ string lexemeName(int lexeme)
 	case OPERATOR:
 		return "OPERATOR";
 		break;
-	case SEPERATOR:
-		return "SEPERATOR";
+	case SEPARATOR:
+		return "SEPARATOR";
 		break;
 	case STRING:
 		return "STRING";
