@@ -47,15 +47,15 @@ string lexemeName(string token, int lexeme);
 // ============================================================================
 /* INTEGER, REAL, OPERATOR, STRING, SPACE, SEPARATOR, COMMENT, UNKNOWN  */
 int table[9][9] =
-{ {REJECT,    INTEGER,       REAL,          OPERATOR,      STRING,       SPACE,         SEPARATOR,    COMMENT,  UNKNOWN},
+			  {{REJECT,   INTEGER,       REAL,          OPERATOR,      STRING,       SPACE,         SEPARATOR,    COMMENT,  UNKNOWN},
 /* STATE 1 */ {INTEGER,   INTEGER    ,   REAL       ,   REJECT     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 /* STATE 2 */ {REAL,      REAL       ,   UNKNOWN    ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-/* STATE 3 */ {OPERATOR,  REJECT     ,   REJECT     ,   COMMENT    ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-/* STATE 4 */ {STRING,    STRING     ,   REJECT     ,   STRING     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
+/* STATE 3 */ {OPERATOR,  REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
+/* STATE 4 */ {STRING,    STRING     ,   REJECT     ,   REJECT     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 /* STATE 5 */ {SPACE,     REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 /* STATE 6 */ {SEPARATOR, REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-/* STATE 7 */ {COMMENT,   REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  REJECT,   REJECT  },
-/* STATE 8 */ {UNKNOWN,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,  UNKNOWN    ,   UNKNOWN    ,  UNKNOWN,  REJECT  } };
+/* STATE 7 */ {COMMENT,  COMMENT     ,   COMMENT    ,   COMMENT    ,   COMMENT    ,  COMMENT    ,   COMMENT    ,  REJECT ,  COMMENT  },
+/* STATE 8 */ {UNKNOWN,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,  UNKNOWN    ,   UNKNOWN    ,  UNKNOWN,  UNKNOWN  }};
 
 // ============================================================================
 //  MAIN
@@ -125,22 +125,22 @@ int main()
 // ============================================================================
 vector<Tokens> lexer(string fileInput)
 {
-	vector<Tokens> tokens;
 	Tokens type;
+	vector<Tokens> tokens;
 	string currentToken = "";
 	int col = REJECT;
 	int currentState = REJECT;
 	int previousState = REJECT;
 	char currentChar = ' ';
 
-	for (int i = 0; i < fileInput.length(); i++)
+	for (int i = 0; i < fileInput.length();)
 	{
 		currentChar = fileInput[i];
 		col = getCol(currentChar);
 		currentState = table[currentState][col];
 		if (currentState == REJECT)
 		{
-			if (previousState != SPACE)
+			if (previousState != SPACE && previousState != COMMENT)
 			{
 				type.token = currentToken;
 				type.lexeme = previousState;
@@ -152,6 +152,7 @@ vector<Tokens> lexer(string fileInput)
 		else
 		{
 			currentToken += currentChar;
+			i++;
 		}
 		previousState = currentState;
 	}
@@ -160,6 +161,7 @@ vector<Tokens> lexer(string fileInput)
 		type.token = currentToken;
 		type.lexeme = currentState;
 		type.lexemeName = lexemeName(type.token, type.lexeme);
+		tokens.push_back(type);
 	}
 	return tokens;
 }
@@ -171,6 +173,10 @@ vector<Tokens> lexer(string fileInput)
 // ============================================================================
 int getCol(char character)
 {
+	if (character == '!')
+	{
+		return COMMENT;
+	}
 	if (isspace(character))
 	{
 		return SPACE;
@@ -183,7 +189,7 @@ int getCol(char character)
 	{
 		return REAL;
 	}
-	else if (isalpha(character))
+	else if (isalpha(character) || character == '$')
 	{
 		return STRING;
 	}
