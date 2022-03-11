@@ -11,6 +11,9 @@
 #include <fstream>
 
 using namespace std;
+/*
+bool isComment;
+*/
 // These are the inputs for the FSM.
 enum TransitionStates {
 	// REJECT is the starting state and final state.
@@ -47,7 +50,7 @@ string lexemeName(string token, int lexeme);
 // ============================================================================
 /* INTEGER, REAL, OPERATOR, STRING, SPACE, SEPARATOR, COMMENT, UNKNOWN  */
 int table[9][9] =
-			  {{REJECT,   INTEGER,       REAL,          OPERATOR,      STRING,       SPACE,         SEPARATOR,    COMMENT,  UNKNOWN},
+{ {REJECT,   INTEGER,       REAL,          OPERATOR,      STRING,       SPACE,         SEPARATOR,    COMMENT,  UNKNOWN},
 /* STATE 1 */ {INTEGER,   INTEGER    ,   REAL       ,   REJECT     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 /* STATE 2 */ {REAL,      REAL       ,   UNKNOWN    ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 /* STATE 3 */ {OPERATOR,  REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
@@ -55,7 +58,7 @@ int table[9][9] =
 /* STATE 5 */ {SPACE,     REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 /* STATE 6 */ {SEPARATOR, REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 /* STATE 7 */ {COMMENT,  COMMENT     ,   COMMENT    ,   COMMENT    ,   COMMENT    ,  COMMENT    ,   COMMENT    ,  REJECT ,  COMMENT  },
-/* STATE 8 */ {UNKNOWN,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,  UNKNOWN    ,   UNKNOWN    ,  UNKNOWN,  UNKNOWN  }};
+/* STATE 8 */ {UNKNOWN,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,   UNKNOWN    ,  UNKNOWN    ,   UNKNOWN    ,  UNKNOWN,  UNKNOWN  } };
 
 // ============================================================================
 //  MAIN
@@ -66,7 +69,7 @@ int main()
 	int input;
 	string fileInput = "";
 	vector<Tokens> tokens;
-	bool isComment;
+
 
 	string file1 = "Input1.txt";
 	string file2 = "Input2.txt";
@@ -107,8 +110,9 @@ int main()
 		cout << "Failed to open file." << endl;
 		return 0;
 	}
-	
+	/*
 	isComment = false;
+	*/
 	while (getline(inFile, fileInput))
 	{
 		tokens = lexer(fileInput);
@@ -134,26 +138,29 @@ vector<Tokens> lexer(string fileInput)
 	int currentState = REJECT;
 	int previousState = REJECT;
 	char currentChar = ' ';
-	
+
 	for (int i = 0; i < fileInput.length();)
 	{
 		currentChar = fileInput[i];
 		col = getCol(currentChar);
 		currentState = table[currentState][col];
-		
-		if(isComment == false && col == COMMENT)
+		/*
+		if (isComment == false && col == COMMENT)
 		{
+			cout << "scenA" << endl;
 			isComment = true;
 		}
-		else if(isComment == true && col != COMMENT)
+		else if (isComment == true && col != COMMENT)
 		{
 			currentState = COMMENT;
+			cout << "scenB" << endl;
 		}
-		else if(isComment == true && col == COMMENT)
+		else if (isComment == true && col == COMMENT)
 		{
-			type.isComment = false;
+			isComment = false;
+			cout << "scenC" << endl;
 		}
-		
+		*/
 		if (currentState == REJECT)
 		{
 			if (previousState != SPACE && previousState != COMMENT)
@@ -169,10 +176,6 @@ vector<Tokens> lexer(string fileInput)
 		{
 			currentToken += currentChar;
 			i++;
-		}
-		if (currentState == COMMENT)
-		{
-			check = true;
 		}
 		previousState = currentState;
 	}
@@ -275,4 +278,3 @@ string lexemeName(string token, int lexeme)
 		break;
 	}
 }// ============================================================================
-
