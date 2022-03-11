@@ -164,7 +164,7 @@ vector<Tokens> lexer(string fileInput)
 	{
 		type.token = currentToken;
 		type.lexeme = currentState;
-		type.lexemeName = lexemeName(type.lexeme);
+		type.lexemeName = lexemeName(type.token, type.lexeme);
 	}
 	return tokens;
 }
@@ -192,15 +192,16 @@ int getCol(char character)
 	{
 		return STRING;
 	}
-	else if (ispunct(character))
-	{
-		return SEPARATOR;
-	}
-	else if (character == '+' || character == '-' || character == '/' || character == '*' || character == '==' || character == '=')
+	else if (character == '+' || character == '-' || character == '/' || character == '*' || character == '==' || character == '=' || 
+		 character == '>' || character == '<' || character == '%')
 	{
 		return OPERATOR;
 	}
-	else if (character == '(' || character == ')' || character == '{' || character == '}')
+	else if (character == '(' || character == ')' || character == '{' || character == '}' || character == ',' || character == ';' ||character == ':')
+	{
+		return SEPARATOR;
+	}
+	else if (ispunct(character))
 	{
 		return SEPARATOR;
 	}
@@ -212,7 +213,7 @@ int getCol(char character)
 //      INPUT  - currentState
 //      OUTPUT - Name of Lexeme
 // ============================================================================
-string lexemeName(int lexeme)
+string lexemeName(string token, int lexeme)
 {
 	switch (lexeme)
 	{
@@ -229,7 +230,15 @@ string lexemeName(int lexeme)
 		return "SEPARATOR";
 		break;
 	case STRING:
-		return "STRING";
+		if(token == "int" || token == "float" || token == "bool" || token == "if" || token == "else" || token == "then" || 
+		   token == "do" || token == "while" || token == "for" || token == "and" ||token == "or" ||token == "function")
+		{
+			return "KEYWORD";
+		}
+		else
+		{
+			return "IDENTIFIER";
+		}				
 		break;
 	case COMMENT:
 		return "COMMENT";
