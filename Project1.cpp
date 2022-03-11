@@ -112,7 +112,6 @@ int main()
 		return 0;
 	}
 
-
 	while (getline(inFile, fileInput))
 	{
 		tokens = lexer(fileInput);
@@ -138,13 +137,12 @@ vector<Tokens> lexer(string fileInput)
 	int currentState = REJECT;
 	int previousState = REJECT;
 	char currentChar = ' ';
-
+	
 	for (int i = 0; i < fileInput.length(); i++)
 	{
 		currentChar = fileInput[i];
 		col = getCol(currentChar);
 		currentState = table[currentState][col];
-
 		if (currentState == REJECT)
 		{
 			if (previousState != SPACE)
@@ -196,14 +194,15 @@ int getCol(char character)
 	}
 	else if (ispunct(character))
 	{
-		if (character == '+' || character == '-' || character == '/' || character == '*')
-		{
-			return OPERATOR;
-		}
-		if (character == '(' || character == ')' || character == '{' || character == '}')
-		{
-			return SEPARATOR;
-		}
+		return SEPARATOR;
+	}
+	else if (character == '+' || character == '-' || character == '/' || character == '*' || character == '==' || character == '=')
+	{
+		return OPERATOR;
+	}
+	else if (character == '(' || character == ')' || character == '{' || character == '}')
+	{
+		return SEPARATOR;
 	}
 	return UNKNOWN;
 }
