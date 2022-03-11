@@ -33,7 +33,6 @@ struct Tokens
 	string token;
 	int lexeme;
 	string lexemeName;
-	bool isComment;
 };
 
 // ============================================================================
@@ -67,6 +66,7 @@ int main()
 	int input;
 	string fileInput = "";
 	vector<Tokens> tokens;
+	bool isComment;
 
 	string file1 = "Input1.txt";
 	string file2 = "Input2.txt";
@@ -108,7 +108,7 @@ int main()
 		return 0;
 	}
 	
-	tokens.isComment = false;
+	isComment = false;
 	while (getline(inFile, fileInput))
 	{
 		tokens = lexer(fileInput);
@@ -125,7 +125,7 @@ int main()
 // ============================================================================
 //  Vector lexer
 // ============================================================================
-vector<Tokens> lexer(string fileInput, bool check)
+vector<Tokens> lexer(string fileInput)
 {
 	Tokens type;
 	vector<Tokens> tokens;
@@ -141,15 +141,15 @@ vector<Tokens> lexer(string fileInput, bool check)
 		col = getCol(currentChar);
 		currentState = table[currentState][col];
 		
-		if(type.isComment == false && col == COMMENT)
+		if(isComment == false && col == COMMENT)
 		{
-			type.isComment = true;
+			isComment = true;
 		}
-		else if(type.isComment == true && col != COMMENT)
+		else if(isComment == true && col != COMMENT)
 		{
 			currentState = COMMENT;
 		}
-		else if(type.isComment == true && col == COMMENT)
+		else if(isComment == true && col == COMMENT)
 		{
 			type.isComment = false;
 		}
