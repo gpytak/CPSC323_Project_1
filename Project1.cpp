@@ -63,14 +63,11 @@ int table[9][9] =
 int main()
 {
 	ifstream inFile;
+	ofstream oFile;
 	int input;
 	string fileInput = "";
 	vector<Tokens> tokens;
 	bool isComment;
-
-	string file1 = "Input1.txt";
-	string file2 = "Input2.txt";
-	string file3 = "Input3.txt";
 
 	cout << "Please choose which input file to analyze:" << endl;
 	cout << "1: Input File 1" << endl;
@@ -93,31 +90,37 @@ int main()
 	if (input == 1)
 	{
 		inFile.open("file1.txt");
+		oFile.open("file1out.txt");
 	}
 	else if (input == 2)
 	{
 		inFile.open("file2.txt");
+		oFile.open("file2out.txt");
 	}
 	else
 	{
 		inFile.open("file3.txt");
+		oFile.open("file3out.txt");
 	}
-	if (!inFile.is_open())
+	if (!inFile.is_open() || !oFile.is_open())
 	{
 		cout << "Failed to open file." << endl;
 		return 0;
 	}
 	
+	oFile << "Token" << " \t" << "Lexeme" << endl;
+
 	isComment = false;
 	while (getline(inFile, fileInput))
 	{
 		tokens = lexer(fileInput);
 		for (int i = 0; i < tokens.size(); i++)
 		{
-			cout << tokens[i].lexemeName << " \t" << tokens[i].token << endl;
+			oFile << tokens[i].lexemeName << " \t" << tokens[i].token << endl;
 		}
 	}
 
+	oFile.close();
 	inFile.close();
 	return 0;
 }
