@@ -233,7 +233,36 @@ int getCol(char character)
 //      INPUT  - 
 //      OUTPUT - 
 // ============================================================================
-void lexer(string line)
+string lexemeName(int lexeme)
 {
-
+	switch (lexeme)
+	{
+	case INTEGER:
+		return "INTEGER";
+		break;
+	case REAL:
+		return "REAL  ";
+		break;
+	case OPERATOR:
+		return "OPERATOR";
+		break;
+	case SEPERATOR:
+		return "SEPERATOR";
+		break;
+	case STRING:
+		return "STRING";
+		break;
+	case COMMENT:
+		return "COMMENT";
+		break;
+	case UNKNOWN:
+		return "UNKNOWN";
+		break;
+	case SPACE:
+		return "SPACE";
+		break;
+	default:
+		return "ERROR";
+		break;
+	}
 }
