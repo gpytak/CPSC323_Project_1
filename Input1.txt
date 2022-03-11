@@ -1,0 +1,36 @@
+while(inFile.eof() == false)
+	{
+		inFile.get(character);
+		total++;
+		if(character == '\n')
+		{
+			totalLines++;
+		}
+		if(character == '?')
+		{
+			totalQuestion++;
+		}
+		else if(islower(character))
+		{
+			totalLower++;
+		}
+		else if(isdigit(character))
+		{
+			totalDigits++;
+		}
+		else if(isupper(character))
+		{
+			totalUpper++;
+		}
+		else if(isspace(character))
+		{
+			totalSpace++;
+		}
+		else if(character == '.')
+		{
+			totalPeriods++;
+		}
+		else if(ispunct(character))
+		{
+			totalPunct++;
+		}
