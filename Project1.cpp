@@ -109,7 +109,7 @@ class StateTable
 	{ 		      {REJECT,    INTEGER,       REAL,          OPERATOR,      STRING,       SPACE,         SEPARATOR,    COMMENT,  UNKNOWN},
 		/* STATE 1 */ {INTEGER,   INTEGER    ,   REAL       ,   REJECT     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 		/* STATE 2 */ {REAL,      REAL       ,   UNKNOWN    ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
-		/* STATE 3 */ {OPERATOR,  REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
+		/* STATE 3 */ {OPERATOR,  REJECT     ,   REJECT     ,   COMMENT    ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 		/* STATE 4 */ {STRING,    STRING     ,   REJECT     ,   STRING     ,   STRING     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 		/* STATE 5 */ {SPACE,     REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
 		/* STATE 6 */ {SEPARATOR, REJECT     ,   REJECT     ,   REJECT     ,   REJECT     ,  REJECT     ,   REJECT     ,  COMMENT,  REJECT  },
