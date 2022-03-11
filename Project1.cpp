@@ -43,11 +43,6 @@ int getCol(char character);
 string lexemeName(string token, int lexeme);
 
 // ============================================================================
-//  Class Prototypes
-// ============================================================================
-class StateTable;
-
-// ============================================================================
 //  Integer Table
 // ============================================================================
 /* INTEGER, REAL, OPERATOR, STRING, SPACE, SEPARATOR, COMMENT, UNKNOWN  */
