@@ -113,6 +113,8 @@ int main()
 	/*
 	isComment = false;
 	*/
+
+	oFile << "Token" << " \t" << "Lexeme" << endl;
 	while (getline(inFile, fileInput))
 	{
 		tokens = lexer(fileInput);
