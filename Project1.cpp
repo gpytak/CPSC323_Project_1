@@ -40,7 +40,7 @@ struct Tokens
 // ============================================================================
 vector<Tokens> lexer(string fileInput);
 int getCol(char character);
-string lexemeName(int lexeme);
+string lexemeName(string token, int lexeme);
 
 // ============================================================================
 //  Class Prototypes
@@ -92,7 +92,7 @@ int main()
 		}
 		cout << "Please input 1, 2, or 3." << endl;
 	}
-	
+
 	// Uses user input to select which file to open
 	if (input == 1)
 	{
@@ -137,7 +137,7 @@ vector<Tokens> lexer(string fileInput)
 	int currentState = REJECT;
 	int previousState = REJECT;
 	char currentChar = ' ';
-	
+
 	for (int i = 0; i < fileInput.length(); i++)
 	{
 		currentChar = fileInput[i];
@@ -192,12 +192,12 @@ int getCol(char character)
 	{
 		return STRING;
 	}
-	else if (character == '+' || character == '-' || character == '/' || character == '*' || character == '==' || character == '=' || 
-		 character == '>' || character == '<' || character == '%')
+	else if (character == '+' || character == '-' || character == '/' || character == '*' || character == '==' || character == '=' ||
+		character == '>' || character == '<' || character == '%')
 	{
 		return OPERATOR;
 	}
-	else if (character == '(' || character == ')' || character == '{' || character == '}' || character == ',' || character == ';' ||character == ':')
+	else if (character == '(' || character == ')' || character == '{' || character == '}' || character == ',' || character == ';' || character == ':')
 	{
 		return SEPARATOR;
 	}
@@ -230,15 +230,15 @@ string lexemeName(string token, int lexeme)
 		return "SEPARATOR";
 		break;
 	case STRING:
-		if(token == "int" || token == "float" || token == "bool" || token == "if" || token == "else" || token == "then" || 
-		   token == "do" || token == "while" || token == "for" || token == "and" ||token == "or" ||token == "function")
+		if (token == "int" || token == "float" || token == "bool" || token == "if" || token == "else" || token == "then" ||
+			token == "do" || token == "while" || token == "for" || token == "and" || token == "or" || token == "function")
 		{
 			return "KEYWORD";
 		}
 		else
 		{
 			return "IDENTIFIER";
-		}				
+		}
 		break;
 	case COMMENT:
 		return "COMMENT";
