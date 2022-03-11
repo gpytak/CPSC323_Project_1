@@ -11,9 +11,9 @@
 #include <fstream>
 
 using namespace std;
-/*
-bool isComment;
-*/
+
+//bool isComment;
+
 // These are the inputs for the FSM.
 enum TransitionStates {
 	// REJECT is the starting state and final state.
@@ -110,9 +110,9 @@ int main()
 		cout << "Failed to open file." << endl;
 		return 0;
 	}
-	/*
-	isComment = false;
-	*/
+	
+	//isComment = false;
+	
 	while (getline(inFile, fileInput))
 	{
 		tokens = lexer(fileInput);
@@ -145,22 +145,24 @@ vector<Tokens> lexer(string fileInput)
 		col = getCol(currentChar);
 		currentState = table[currentState][col];
 		/*
+		cout << fileInput[i] << endl;
 		if (isComment == false && col == COMMENT)
 		{
-			cout << "scenA" << endl;
+			cout << "changeToTrue" << endl;
 			isComment = true;
 		}
 		else if (isComment == true && col != COMMENT)
 		{
 			currentState = COMMENT;
-			cout << "scenB" << endl;
+			cout << "continueComment" << endl;
 		}
 		else if (isComment == true && col == COMMENT)
 		{
 			isComment = false;
-			cout << "scenC" << endl;
+			cout << "changeToFalse" << endl;
 		}
 		*/
+		
 		if (currentState == REJECT)
 		{
 			if (previousState != SPACE && previousState != COMMENT)
