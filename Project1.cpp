@@ -92,17 +92,17 @@ int main()
 	// Uses user input to select which file to open
 	if (input == 1)
 	{
-		inFile.open("file1.txt");
+		inFile.open("Input1.txt");
 		oFile.open("file1out.txt");
 	}
 	else if (input == 2)
 	{
-		inFile.open("file2.txt");
+		inFile.open("Input1.txt");
 		oFile.open("file2out.txt");
 	}
 	else
 	{
-		inFile.open("file3.txt");
+		inFile.open("Input3.txt");
 		oFile.open("file3out.txt");
 	}
 	if (!inFile.is_open() || !oFile.is_open())
@@ -114,7 +114,7 @@ int main()
 	isComment = false;
 	*/
 
-	oFile << "Token" << " \t" << "Lexeme" << endl;
+	oFile << "Token" << " \t\t" << "Lexeme" << endl;
 	while (getline(inFile, fileInput))
 	{
 		tokens = lexer(fileInput);
