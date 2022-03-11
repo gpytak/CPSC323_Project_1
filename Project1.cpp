@@ -149,7 +149,7 @@ vector<Tokens> lexer(string fileInput)
 			{
 				type.token = currentToken;
 				type.lexeme = previousState;
-				type.lexemeName = lexemeName(type.lexeme);
+				type.lexemeName = lexemeName(type.token, type.lexeme);
 				tokens.push_back(type);
 			}
 			currentToken = "";
