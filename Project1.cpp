@@ -4,7 +4,6 @@
 // Class: CPSC 232
 // Project: Project 1 Lexer
 // ============================================================================
-#include "pch.h"
 #include <iostream>
 #include <vector>
 #include <string>
