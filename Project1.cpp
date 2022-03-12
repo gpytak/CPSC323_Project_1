@@ -97,7 +97,7 @@ int main()
 	}
 	else if (input == 2)
 	{
-		inFile.open("Input1.txt");
+		inFile.open("Input2.txt");
 		oFile.open("file2out.txt");
 	}
 	else
